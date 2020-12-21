@@ -22,7 +22,7 @@ function deleteBook(event) {
   }
 }
 
-function changeReadUnread(event) {
+function toggleReadUnread(event) {
   let button = event.target;
   let bookContainer = document.querySelector(`[data-book-id="${button.value}"]`);
   let bookRead = bookContainer.querySelector("#book-read");
@@ -130,7 +130,7 @@ document.getElementById("new-book").addEventListener('click', showBookFields)
 document.getElementById("add-book").addEventListener('click', addBook)
 // read button event
 document.querySelectorAll(".read-button").forEach(element => {
-  element.addEventListener('click', changeReadUnread)
+  element.addEventListener('click', toggleReadUnread)
 });
 function deleteButtonEvent() {
   document.querySelectorAll(".delete-button").forEach(element => {
