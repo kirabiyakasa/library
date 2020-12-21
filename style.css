@@ -1,15 +1,16 @@
 #library-container {
   display: flex;
   flex-direction: row-reverse;
+  justify-content: center;
 }
 
-#delete-button-container {
+#delete-button-container, #read-button-container {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
 }
 
-.delete-button {
+.delete-button, .read-button {
   font-size: 25px;
 }
 
