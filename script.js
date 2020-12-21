@@ -11,7 +11,7 @@ function Book(title, author, pages, read) {
 }
 
 function deleteBook(event) {
-  let answer = confirm('Delete this book from the library?')
+  let answer = confirm('Delete this book from the library?');
   let button = event.target;
   let bookToDelete;
   if (button.tagName == 'BUTTON' && answer == true) {
@@ -19,6 +19,7 @@ function deleteBook(event) {
     myLibrary.splice(button.value, 1)
     document.getElementById("library-container").innerHTML = getLibraryIndex()
     deleteButtonEvent()
+    readButtonEvent()
   }
 }
 
@@ -98,8 +99,20 @@ const getAllBooks = function() {
   });
 }
 
-// change display for button fields
-const showBookFields = function() {
+// turn on display for button fields
+const showBookFields = function(event) {
+  let bookFields = document.getElementById("add-book-container");
+  let newBookButton = event.target;
+  bookFields.style.display = "block";
+  newBookButton.style.display = "none";
+}
+
+// turn off display for button fields
+const hideBookFields = function(event) {
+  let bookFields = document.getElementById("add-book-container");
+  let newBookButton = document.getElementById("new-book");
+  bookFields.style.display = "none";
+  newBookButton.style.display = "block";
 }
 
 function emptyFields(nodes) {
@@ -113,10 +126,10 @@ function emptyFields(nodes) {
 
 // add book to myLibrary
 function addBook() {
-  let title = document.getElementById("book-title")
-  let author = document.getElementById("book-author")
-  let pages = document.getElementById("book-pages")
-  let read = document.getElementById("book-read")
+  let title = document.getElementById("book-title-field");
+  let author = document.getElementById("book-author-field");
+  let pages = document.getElementById("book-pages-field");
+  let read = document.getElementById("book-read-field");
 
   let newBook = new Book(title.value, author.value, pages.value, read.checked)
   myLibrary.push(newBook)
@@ -124,14 +137,18 @@ function addBook() {
   emptyFields([title, author, pages, read])
   libraryContainer = document.getElementById("library-container")
   libraryContainer.innerHTML = getLibraryIndex()
+  deleteButtonEvent()
+  readButtonEvent()
 }
 
 document.getElementById("new-book").addEventListener('click', showBookFields)
 document.getElementById("add-book").addEventListener('click', addBook)
-// read button event
-document.querySelectorAll(".read-button").forEach(element => {
-  element.addEventListener('click', toggleReadUnread)
-});
+document.getElementById("cancel-add").addEventListener('click', hideBookFields)
+function readButtonEvent() {
+  document.querySelectorAll(".read-button").forEach(element => {
+    element.addEventListener('click', toggleReadUnread)
+  });
+}
 function deleteButtonEvent() {
   document.querySelectorAll(".delete-button").forEach(element => {
     element.addEventListener('click', deleteBook)
