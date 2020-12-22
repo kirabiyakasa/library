@@ -20,6 +20,7 @@ function deleteBook(event) {
     document.getElementById("library-container").innerHTML = getLibraryIndex()
     deleteButtonEvent()
     readButtonEvent()
+    saveLibrary()
   }
 }
 
@@ -31,10 +32,13 @@ function toggleReadUnread(event) {
   if (myLibrary[button.value].read == true) {
     myLibrary[button.value].read = false
     bookRead.innerHTML = "false";
+    button.innerHTML = "Read";
   } else {
     myLibrary[button.value].read = true
     bookRead.innerHTML = "true";
+    button.innerHTML = "Unread";
   }
+  saveLibrary()
 }
 
 // delete book button
@@ -83,22 +87,6 @@ function getLibraryIndex() {
   return html
 }
 
-let book1 = new Book('a', 'a', 1, true);
-let book2 = new Book('b', 'b', 2, false);
-myLibrary.push(book1)
-myLibrary.push(book2)
-
-const libraryIndex = getLibraryIndex();
-document.getElementById("library-container").innerHTML = libraryIndex;
-
-// get all book elements
-const getAllBooks = function() {
-  let books = document.querySelectorAll(".book-container")
-  books.map(book => {
-    book += "<button></button>"
-  });
-}
-
 // turn on display for button fields
 const showBookFields = function(event) {
   let bookFields = document.getElementById("add-book-container");
@@ -139,6 +127,7 @@ function addBook() {
   libraryContainer.innerHTML = getLibraryIndex()
   deleteButtonEvent()
   readButtonEvent()
+  saveLibrary()
 }
 
 document.getElementById("new-book").addEventListener('click', showBookFields)
@@ -154,4 +143,61 @@ function deleteButtonEvent() {
     element.addEventListener('click', deleteBook)
   });
 }
+
+function storageAvailable(type) {
+  var storage;
+  try {
+      storage = window[type];
+      var x = '__storage_test__';
+      storage.setItem(x, x);
+      storage.removeItem(x);
+      return true;
+  }
+  catch(e) {
+      return e instanceof DOMException && (
+          // everything except Firefox
+          e.code === 22 ||
+          // Firefox
+          e.code === 1014 ||
+          // test name field too, because code might not be present
+          // everything except Firefox
+          e.name === 'QuotaExceededError' ||
+          // Firefox
+          e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+          // acknowledge QuotaExceededError only if there's something already stored
+          (storage && storage.length !== 0);
+  }
+}
+
+function saveLibrary() {
+  localStorage.setItem('myLibrary', JSON.stringify(myLibrary))
+}
+
+function populateLibrary() {
+  myLibrary = JSON.parse(localStorage.getItem("myLibrary"));
+  let libraryIndex = getLibraryIndex()
+  deleteButtonEvent()
+  readButtonEvent()
+  document.getElementById("library-container").innerHTML = libraryIndex;
+}
+
+if (storageAvailable('localStorage')) {
+  if(!localStorage.getItem('myLibrary')) {
+    let book1 = new Book('a', 'a', 1, true);
+    let book2 = new Book('b', 'b', 2, false);
+    myLibrary.push(book1)
+    myLibrary.push(book2)
+    let libraryIndex = getLibraryIndex();
+    document.getElementById("library-container").innerHTML = libraryIndex;
+
+    saveLibrary();
+  } else {
+    populateLibrary();
+  }
+}
+else {
+  // Too bad, no localStorage for us
+}
+
 deleteButtonEvent()
+readButtonEvent()
