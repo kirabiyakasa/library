@@ -1,3 +1,9 @@
+#main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #library-container {
   display: flex;
   flex-direction: row-reverse;
@@ -27,4 +33,33 @@
 .book-data {
   border: 1px solid black;
   font-size: 25px;
+}
+
+#new-book {
+  margin-top: 20px;
+  font-size: 25px;
+}
+
+#add-book-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.book-field {
+  display: block;
+}
+
+.checkbox-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.read-checkbox {
+  display: block;
+}
+
+#add-book, #cancel-add {
+  font-size: 20px;
 }

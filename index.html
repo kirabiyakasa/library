@@ -7,27 +7,27 @@
   </head>
 
   <body>
-    <h1>My Library</h1>
-    <div id="library-container"></div>
+    <div id="main-container">
+      <h1>My Library</h1>
+      <div id="library-container"></div>
 
-    <button id="new-book" style="display: block;">New Book</button>
+      <button id="new-book" style="display: block;">New Book</button>
 
-    <div id="add-book-container" style="display: none">
-      <label for="book-title">Title:</label>
-      <input type="text" id="book-title-field"></input>
-      <br>
-      <label for="book-author">Author:</label>
-      <input type="text" id="book-author-field"></input>
-      <br>
-      <label for="book-pages">Pages:</label>
-      <input type="number" id="book-pages-field"></input>
-      <br>
-      <label for="book-read">Read:</label>
-      <input type="checkbox" id="book-read-field"></input>
-      <br>
-      <button id="add-book">Add Book</button>
-      <button id="cancel-add">Cancel</button>
-      <!-- switch display types -->
+      <div id="add-book-container" style="display: none">
+        <label for="book-title" class="book-field">Title:</label>
+        <input type="text" id="book-title-field" class="book-field"></input>
+        <label for="book-author" class="book-field">Author:</label>
+        <input type="text" id="book-author-field" class="book-field"></input>
+        <label for="book-pages" class="book-field">Pages:</label>
+        <input type="number" id="book-pages-field" class="book-field"></input>
+        <div class="checkbox-container">
+          <label for="book-read" class="read-checkbox">Read:</label>
+          <input type="checkbox" id="book-read-field" class="read-checkbox">
+          </input>
+        </div>
+        <button id="add-book" class="book-field">Add Book</button>
+        <button id="cancel-add" class="book-field">Cancel</button>
+      </div>
     </div>
 
     <link rel="stylesheet" type="text/css" href="style.css">
